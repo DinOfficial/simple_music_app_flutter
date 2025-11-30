@@ -3,7 +3,7 @@ class Song{
   String artistName;
   String coverImg;
   String songUrl;
-  int durationSeconds;
+  double durationSeconds;
 
 
   Song({

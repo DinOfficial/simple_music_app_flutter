@@ -64,7 +64,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _playSong(int index) async {
     await _audioPlayer.stop();
     _currentIndex = index;
-    final song = _playList[index];
     setState(() {
       _duration = Duration.zero;
       _position = Duration.zero;
@@ -128,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.black12,
       appBar: AppBar(
-        title: Text('Simple Music App', style: TextStyle(color: Colors.white)),
+        title: Text( _playList[_currentIndex].songName, style: TextStyle(color: Colors.white)),
         centerTitle: true,
         backgroundColor: Colors.black87,
       ),
@@ -173,9 +172,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemCount: _playList.length,
                 itemBuilder: (context, index) {
                   Song song = _playList[index];
+                  bool isSelected = _currentIndex == index;
                   return ListTile(
+                    selected: isSelected,
+                    selectedTileColor: Colors.white10,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     leading: CircleAvatar(
-                      backgroundColor: Colors.white70,
+                      backgroundColor: isSelected ? Colors.deepPurpleAccent: Colors.white70,
                       child: Text(
                         '${index + 1}',
                         style: TextStyle(
@@ -203,8 +206,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     trailing: Icon(
-                      Icons.play_circle,
-                      color: Colors.white70,
+                      isSelected && _isPlaying ? Icons.pause_circle: Icons.play_circle,
+                      color: isSelected? Colors.deepPurpleAccent: Colors.white70,
                       size: 28,
                     ),
                     onTap: () => _playSong(index),
