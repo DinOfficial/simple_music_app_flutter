@@ -127,7 +127,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.black12,
       appBar: AppBar(
-        title: Text( _playList[_currentIndex].songName, style: TextStyle(color: Colors.white)),
+        title: Text(
+          _playList[_currentIndex].songName,
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
         backgroundColor: Colors.black87,
       ),
@@ -176,9 +179,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   return ListTile(
                     selected: isSelected,
                     selectedTileColor: Colors.white10,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     leading: CircleAvatar(
-                      backgroundColor: isSelected ? Colors.deepPurpleAccent: Colors.white70,
+                      backgroundColor: isSelected
+                          ? Colors.deepPurpleAccent
+                          : Colors.white70,
                       child: Text(
                         '${index + 1}',
                         style: TextStyle(
@@ -205,10 +212,23 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    trailing: Icon(
-                      isSelected && _isPlaying ? Icons.pause_circle: Icons.play_circle,
-                      color: isSelected? Colors.deepPurpleAccent: Colors.white70,
-                      size: 28,
+                    trailing: IconButton(
+                      icon: Icon(
+                        isSelected && _isPlaying
+                            ? Icons.pause_circle
+                            : Icons.play_circle,
+                        color: isSelected
+                            ? Colors.deepPurpleAccent
+                            : Colors.white70,
+                        size: 28,
+                      ),
+                      onPressed: () {
+                        if(isSelected){
+                          _togglePlayer();
+                        }else{
+                          _playSong(index);
+                        }
+                      },
                     ),
                     onTap: () => _playSong(index),
                   );
